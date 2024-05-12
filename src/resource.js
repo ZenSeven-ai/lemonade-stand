@@ -1,9 +1,13 @@
+// Class for getting and downloading the images 
+
 class Resources {
 
     constructor(){
         // Download the pictures 
         this.toLoad = {
-            sky: "/lemonade-sprites/background.png"
+            sky: "/lemonade-sprites/background.png",
+            background: "/lemonade-sprites/ground.png",
+            girl: "/lemonade-sprites/girlsheet.png"
 
         };
     
