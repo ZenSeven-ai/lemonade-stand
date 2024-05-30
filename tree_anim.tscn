@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwb2mox76aswq"]
+
+[ext_resource type="Texture2D" uid="uid://bsbhqol53l6hh" path="res://art/trees.png" id="1_jcjtc"]
+[ext_resource type="Script" path="res://tree_anim.gd" id="1_q16k1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_icu1n"]
+size = Vector2(42, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gesai"]
+size = Vector2(65.5, 81.875)
+
+[sub_resource type="Animation" id="Animation_jfvpx"]
+resource_name = "fall_lemons"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_b7i4j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7kn0b"]
+_data = {
+"RESET": SubResource("Animation_b7i4j"),
+"fall_lemons": SubResource("Animation_jfvpx")
+}
+
+[node name="TreeAnim" type="Node2D"]
+script = ExtResource("1_q16k1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("1_jcjtc")
+hframes = 4
+vframes = 2
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
+position = Vector2(0.333333, 2.33333)
+scale = Vector2(0.333333, 0.333333)
+shape = SubResource("RectangleShape2D_icu1n")
+
+[node name="Interact_Area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact_Area"]
+position = Vector2(0.25, 10.0625)
+shape = SubResource("RectangleShape2D_gesai")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7kn0b")
+}
+
+[connection signal="body_entered" from="Interact_Area" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="Interact_Area" to="." method="_on_interact_area_body_exited"]

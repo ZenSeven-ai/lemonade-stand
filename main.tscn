@@ -1,10 +1,9 @@
-[gd_scene load_steps=34 format=3 uid="uid://doyc1bot0vht7"]
+[gd_scene load_steps=31 format=3 uid="uid://doyc1bot0vht7"]
 
 [ext_resource type="Texture2D" uid="uid://b6mwsyii0f1sv" path="res://art/ground.png" id="1_ewjvi"]
 [ext_resource type="Script" path="res://player.gd" id="2_4843m"]
 [ext_resource type="Texture2D" uid="uid://dx14ma0h018wy" path="res://art/lemonade-sprite.png" id="2_sc0ud"]
-[ext_resource type="Texture2D" uid="uid://bsbhqol53l6hh" path="res://art/trees.png" id="4_dnrpj"]
-[ext_resource type="Script" path="res://tree.gd" id="4_jb8bq"]
+[ext_resource type="PackedScene" uid="uid://dwb2mox76aswq" path="res://tree_anim.tscn" id="4_3r412"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rl0rm"]
 texture = ExtResource("1_ewjvi")
@@ -134,6 +133,8 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_o6b30")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_8t8g0")
 blend_point_3/pos = Vector2(-1, 0)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x3uwl"]
 animation = &"walk_front"
@@ -149,13 +150,15 @@ animation = &"walk_left"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_nyngk"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_x3uwl")
-blend_point_0/pos = Vector2(0, 0.9)
+blend_point_0/pos = Vector2(0, 1)
 blend_point_1/node = SubResource("AnimationNodeAnimation_v74yi")
-blend_point_1/pos = Vector2(0, -0.9)
+blend_point_1/pos = Vector2(0, -1)
 blend_point_2/node = SubResource("AnimationNodeAnimation_bw6yp")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_aogqc")
 blend_point_3/pos = Vector2(-1, 0)
+min_space = Vector2(-1.1, -1.1)
+max_space = Vector2(1.1, 1.1)
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ceevo"]
 advance_mode = 2
@@ -324,12 +327,6 @@ _data = {
 "walk_right": SubResource("Animation_1l8wq")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_osg3e"]
-size = Vector2(46.75, 83.375)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jpk0"]
-size = Vector2(72, 87)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsc82"]
 size = Vector2(1310, 20)
 
@@ -344,11 +341,11 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 2, 131072, 0, 3, 196608,
 layer_1/name = "tree"
 layer_1/tile_data = PackedInt32Array(786435, 196608, 0, 327700, 196608, 0, 196618, 196608, 0, 65540, 196608, 0, 786449, 196608, 0, 327697, 196608, 0, 458759, 196608, 0, 589847, 196608, 0, 458765, 262144, 0, 458766, 131072, 0, 65560, 196608, 0)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="player" type="CharacterBody2D" parent="."]
 z_index = 5
 script = ExtResource("2_4843m")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(647, 360)
 zoom = Vector2(2, 2)
 limit_left = 0
@@ -357,7 +354,7 @@ limit_right = 1295
 limit_bottom = 720
 editor_draw_limits = true
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="player"]
 texture_filter = 1
 position = Vector2(604, 350)
 scale = Vector2(3, 3)
@@ -366,147 +363,20 @@ hframes = 3
 vframes = 8
 frame = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
 position = Vector2(605, 363.875)
 shape = SubResource("RectangleShape2D_gyo0u")
 
-[node name="AnimationTree" type="AnimationTree" parent="CharacterBody2D"]
+[node name="AnimationTree" type="AnimationTree" parent="player"]
 tree_root = SubResource("AnimationNodeStateMachine_7ex6x")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(-0.0026201, 0.94709)
-parameters/Walk/blend_position = Vector2(0, 0)
+parameters/Walk/blend_position = Vector2(0.00197625, 0.924)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player"]
 libraries = {
 "": SubResource("AnimationLibrary_b08pk")
 }
-
-[node name="tree" type="Area2D" parent="."]
-script = ExtResource("4_jb8bq")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="tree"]
-position = Vector2(942, 410)
-
-[node name="Sprite2D" type="Sprite2D" parent="tree/StaticBody2D"]
-texture_filter = 1
-position = Vector2(-8, 3)
-scale = Vector2(3, 3)
-texture = ExtResource("4_dnrpj")
-hframes = 4
-vframes = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree/StaticBody2D"]
-position = Vector2(-8.5, 8)
-shape = SubResource("RectangleShape2D_osg3e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree"]
-position = Vector2(935, 421.5)
-shape = SubResource("RectangleShape2D_7jpk0")
-
-[node name="tree6" type="Area2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="tree6"]
-position = Vector2(942, 410)
-
-[node name="Sprite2D" type="Sprite2D" parent="tree6/StaticBody2D"]
-texture_filter = 1
-position = Vector2(-6, -320)
-scale = Vector2(3, 3)
-texture = ExtResource("4_dnrpj")
-hframes = 4
-vframes = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree6/StaticBody2D"]
-position = Vector2(-8, -311)
-shape = SubResource("RectangleShape2D_osg3e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree6"]
-position = Vector2(935, 103)
-shape = SubResource("RectangleShape2D_7jpk0")
-
-[node name="tree5" type="Area2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="tree5"]
-position = Vector2(942, 410)
-
-[node name="Sprite2D" type="Sprite2D" parent="tree5/StaticBody2D"]
-texture_filter = 1
-position = Vector2(-331, -355)
-scale = Vector2(3, 3)
-texture = ExtResource("4_dnrpj")
-hframes = 4
-vframes = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree5/StaticBody2D"]
-position = Vector2(-331.75, -346.625)
-shape = SubResource("RectangleShape2D_osg3e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree5"]
-position = Vector2(610, 67)
-shape = SubResource("RectangleShape2D_7jpk0")
-
-[node name="tree2" type="Area2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="tree2"]
-position = Vector2(942, 410)
-
-[node name="Sprite2D" type="Sprite2D" parent="tree2/StaticBody2D"]
-texture_filter = 1
-position = Vector2(224, 178)
-scale = Vector2(3, 3)
-texture = ExtResource("4_dnrpj")
-hframes = 4
-vframes = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree2/StaticBody2D"]
-position = Vector2(222.625, 188.688)
-shape = SubResource("RectangleShape2D_osg3e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree2"]
-position = Vector2(1163, 598)
-shape = SubResource("RectangleShape2D_7jpk0")
-
-[node name="tree3" type="Area2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="tree3"]
-position = Vector2(942, 410)
-
-[node name="Sprite2D" type="Sprite2D" parent="tree3/StaticBody2D"]
-texture_filter = 1
-position = Vector2(-739, -122)
-scale = Vector2(3, 3)
-texture = ExtResource("4_dnrpj")
-hframes = 4
-vframes = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree3/StaticBody2D"]
-position = Vector2(-739.5, -114.25)
-shape = SubResource("RectangleShape2D_osg3e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree3"]
-position = Vector2(203, 298)
-shape = SubResource("RectangleShape2D_7jpk0")
-
-[node name="tree4" type="Area2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="tree4"]
-position = Vector2(645, 473)
-
-[node name="Sprite2D" type="Sprite2D" parent="tree4/StaticBody2D"]
-texture_filter = 1
-position = Vector2(2, -16)
-scale = Vector2(3, 3)
-texture = ExtResource("4_dnrpj")
-hframes = 4
-vframes = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree4/StaticBody2D"]
-position = Vector2(1, -8.5)
-shape = SubResource("RectangleShape2D_osg3e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tree4"]
-position = Vector2(645, 468)
-shape = SubResource("RectangleShape2D_7jpk0")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -528,5 +398,11 @@ position = Vector2(-5.00012, 502)
 rotation = 1.57211
 shape = SubResource("RectangleShape2D_xsc82")
 
-[connection signal="body_entered" from="tree" to="tree" method="_on_body_entered"]
-[connection signal="body_exited" from="tree" to="tree" method="_on_body_exited"]
+[node name="TreeAnim" parent="." instance=ExtResource("4_3r412")]
+position = Vector2(850, 101)
+
+[node name="TreeAnim2" parent="." instance=ExtResource("4_3r412")]
+position = Vector2(347, 558)
+
+[node name="TreeAnim3" parent="." instance=ExtResource("4_3r412")]
+position = Vector2(194, 200)

@@ -50,6 +50,7 @@ func pick_new_state():
 	else:
 		state_machine.travel("Idle")
 
-
+func player():
+	pass
 
 
