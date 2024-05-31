@@ -8,47 +8,41 @@ class_name Player
 @onready var animation_tree = $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
 
-	
-func _ready():
+var lemons: int = 0
 	
 
-	update_animation_paramteters(starting_direction)
-	
-		
 		
 func _physics_process(_delta):
+	velocity = Vector2.ZERO
 	#Get input direction 
-	
-	
-	
-	
-	var input_direction = Vector2(
-		Input.get_action_strength("right") - Input.get_action_strength("left"),
-		Input.get_action_strength("down") - Input.get_action_strength("up")
-	)
-	
-	update_animation_paramteters(input_direction)
-	
-	#Update velocity
-	velocity = input_direction * move_speed
-	
-	
-	
-	#Move character
-	move_and_slide()
-	pick_new_state()
-	
-func update_animation_paramteters(moveInput: Vector2):
-	if(moveInput != Vector2.ZERO):
-		animation_tree.set("parameters/Idle/blend_position", moveInput)
-		animation_tree.set("parameters/Walk/blend_position", moveInput)
-			
-		
-func pick_new_state():
-	if(velocity != Vector2.ZERO):
-		state_machine.travel("Walk")
+	if Input.is_action_pressed("right"):
+		velocity.x += 1.0
+	if Input.is_action_pressed("left"):
+		velocity.x -= 1.0
+	if Input.is_action_pressed("down"):
+		velocity.y += 1.0
+	if Input.is_action_pressed("up"):
+		velocity.y -= 1.0
+
+	if velocity == Vector2.ZERO:
+		$AnimationTree.get("parameters/playback").travel("Idle")
 	else:
-		state_machine.travel("Idle")
+		$AnimationTree.get("parameters/playback").travel("Walk")
+		$AnimationTree.set("parameters/Idle/blend_position", velocity)
+		$AnimationTree.set("parameters/Walk/blend_position", velocity)
+		
+	velocity = velocity.normalized() * move_speed
+	move_and_slide()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 func player():
 	pass

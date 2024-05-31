@@ -17,9 +17,13 @@ func _process(delta):
 		
 		$AnimationPlayer.play("fall_lemons")
 		
+		#wait for animation
+		await get_tree().create_timer(0.8).timeout
+		print("lemon")
+			
+		
 		
 		# reset to the original state
-		
 		await get_tree().create_timer(10.0).timeout
 		$Sprite2D.frame = 0  
 		
