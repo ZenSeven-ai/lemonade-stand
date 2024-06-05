@@ -1,9 +1,13 @@
-[gd_scene load_steps=31 format=3 uid="uid://doyc1bot0vht7"]
+[gd_scene load_steps=36 format=3 uid="uid://doyc1bot0vht7"]
 
 [ext_resource type="Texture2D" uid="uid://b6mwsyii0f1sv" path="res://art/ground.png" id="1_ewjvi"]
 [ext_resource type="Script" path="res://player.gd" id="2_4843m"]
 [ext_resource type="Texture2D" uid="uid://dx14ma0h018wy" path="res://art/lemonade-sprite.png" id="2_sc0ud"]
 [ext_resource type="PackedScene" uid="uid://dwb2mox76aswq" path="res://tree_anim.tscn" id="4_3r412"]
+[ext_resource type="Script" path="res://HUD.gd" id="5_t16d2"]
+[ext_resource type="Texture2D" uid="uid://duph2730yui0i" path="res://art/HUD/lemon.png" id="5_w3fac"]
+[ext_resource type="Texture2D" uid="uid://w6ncw74f3dh5" path="res://art/HUD/cup.png" id="7_cm5c3"]
+[ext_resource type="Texture2D" uid="uid://b8aufsbjh7oec" path="res://art/HUD/coin.png" id="8_osmk0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rl0rm"]
 texture = ExtResource("1_ewjvi")
@@ -63,6 +67,7 @@ texture = ExtResource("1_ewjvi")
 2:0/0 = 0
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.375, 2.375, 4.125, 2.5, 4.125, 6.5, -3.5, 6.625)
 3:0/0 = 0
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:0/0/physics_layer_0/angular_velocity = 0.0
@@ -70,6 +75,7 @@ texture = ExtResource("1_ewjvi")
 4:0/0 = 0
 4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.625, -6.625, -6.25, 0.125, -5.875, 3.375, 5.125, 3.375, 6.875, 0.75, 6.5, -6.5)
 4:1/size_in_atlas = Vector2i(1, 2)
 4:1/0 = 0
 4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -332,6 +338,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsc82"]
 size = Vector2(1310, 20)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7j46"]
+bg_color = Color(0, 0, 0, 0.278431)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -408,3 +421,68 @@ position = Vector2(347, 558)
 
 [node name="TreeAnim3" parent="." instance=ExtResource("4_3r412")]
 position = Vector2(194, 200)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("5_t16d2")
+
+[node name="Control" type="Panel" parent="HUD"]
+offset_left = 780.0
+offset_top = 180.0
+offset_right = 970.0
+offset_bottom = 261.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d7j46")
+
+[node name="TextureRect" type="TextureRect" parent="HUD"]
+texture_filter = 3
+offset_left = 779.0
+offset_top = 182.0
+offset_right = 838.0
+offset_bottom = 243.0
+texture = ExtResource("5_w3fac")
+stretch_mode = 5
+
+[node name="lemons" type="Label" parent="HUD"]
+offset_left = 818.0
+offset_top = 223.0
+offset_right = 854.0
+offset_bottom = 251.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "##"
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="HUD"]
+texture_filter = 1
+offset_left = 843.0
+offset_top = 191.0
+offset_right = 891.0
+offset_bottom = 238.0
+texture = ExtResource("7_cm5c3")
+
+[node name="cups" type="Label" parent="HUD"]
+offset_left = 876.0
+offset_top = 223.0
+offset_right = 916.0
+offset_bottom = 251.0
+theme_override_font_sizes/font_size = 20
+text = "##"
+
+[node name="TextureRect3" type="TextureRect" parent="HUD"]
+texture_filter = 1
+offset_left = 898.0
+offset_top = 187.0
+offset_right = 952.0
+offset_bottom = 242.0
+texture = ExtResource("8_osmk0")
+
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 934.0
+offset_top = 222.0
+offset_right = 974.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 20
+text = "##"
+
+[connection signal="lemon_collected" from="TreeAnim" to="HUD" method="_on_lemon_collected"]
+[connection signal="lemon_collected" from="TreeAnim2" to="HUD" method="_on_lemon_collected"]
+[connection signal="lemon_collected" from="TreeAnim3" to="HUD" method="_on_lemon_collected"]

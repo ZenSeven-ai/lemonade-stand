@@ -8,7 +8,8 @@ class_name Player
 @onready var animation_tree = $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
 
-var lemons: int = 0
+
+
 	
 
 		
@@ -43,6 +44,8 @@ func _physics_process(_delta):
 	
 	
 	
+
+
 
 func player():
 	pass
