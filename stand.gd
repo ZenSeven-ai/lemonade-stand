@@ -1,9 +1,8 @@
 extends Node2D
 
-signal lemon_collected
-
 var player_in_area = false
 var the_body = null
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,27 +12,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
-	# Make the tree animate to drop the lemons only if it has lemons
-	if Input.is_action_just_pressed("interact") && $Sprite2D.frame == 0 && player_in_area:
-	
-		
-		$AnimationPlayer.play("fall_lemons")
-		
-		#wait for animation
-		await get_tree().create_timer(0.8).timeout
-		
-		# add lemons to the player
-		emit_signal("lemon_collected")
-			
-		
-		
-		# reset to the original state
-		await get_tree().create_timer(10.0).timeout
-		$Sprite2D.frame = 0  
-		
-		
-		
+	if Input.is_action_just_pressed("interact") && player_in_area :
+		pass
 		
 
 
@@ -43,7 +23,11 @@ func _on_interact_area_body_entered(body):
 		player_in_area = true
 		the_body = body
 		
-	
+		
+		
+		
+		
+
 
 
 func _on_interact_area_body_exited(body):
