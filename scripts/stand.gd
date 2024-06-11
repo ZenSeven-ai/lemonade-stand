@@ -1,9 +1,10 @@
 extends Node2D
 
-signal cup_made
-
 var player_in_area = false
 var the_body = null
+
+
+signal money_made
 
 
 
@@ -15,9 +16,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("interact") && player_in_area:
-		
 		if the_body != null:
-			emit_signal("cup_made")
+			emit_signal("money_made")
 		
 
 

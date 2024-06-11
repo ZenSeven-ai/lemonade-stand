@@ -14,3 +14,9 @@
 - things to still do: add sounds when picking the lemons, making lemonade
 - make money when selling to the stand
 - also the special. 
+
+06/10
+- made the stand add money when clicked
+- I have the idea of having the customers come up to the stand and 
+- if you have them waiting too long they will chase you until you make lemonade?
+

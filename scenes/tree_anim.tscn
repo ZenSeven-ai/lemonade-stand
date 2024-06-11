@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dwb2mox76aswq"]
 
 [ext_resource type="Texture2D" uid="uid://bsbhqol53l6hh" path="res://art/trees.png" id="1_jcjtc"]
-[ext_resource type="Script" path="res://tree_anim.gd" id="1_q16k1"]
+[ext_resource type="Script" path="res://scripts/tree_anim.gd" id="1_q16k1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_icu1n"]
 size = Vector2(42, 62)
