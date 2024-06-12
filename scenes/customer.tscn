@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://0ji0db0yfsc1"]
+[gd_scene load_steps=5 format=3 uid="uid://0ji0db0yfsc1"]
 
 [ext_resource type="Texture2D" uid="uid://307e2nf47edr" path="res://icon.svg" id="1_20b0p"]
 [ext_resource type="Script" path="res://customer.gd" id="1_kok7l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r15ti"]
-radius = 69.1809
+radius = 24.0208
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xdsv"]
+size = Vector2(65, 56)
 
 [node name="customer" type="CharacterBody2D"]
 collision_layer = 2
@@ -21,10 +24,19 @@ texture = ExtResource("1_20b0p")
 shape = SubResource("CircleShape2D_r15ti")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 50.0
 debug_enabled = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.048
 autostart = true
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1.5, 1)
+shape = SubResource("RectangleShape2D_8xdsv")
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
