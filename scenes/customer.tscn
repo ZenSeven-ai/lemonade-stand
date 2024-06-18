@@ -38,5 +38,9 @@ autostart = true
 position = Vector2(-1.5, 1)
 shape = SubResource("RectangleShape2D_8xdsv")
 
+[node name="angry" type="Timer" parent="."]
+wait_time = 3.0
+
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="angry" to="." method="_on_angry_timeout"]

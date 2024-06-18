@@ -7,7 +7,8 @@ func _on_timeout():
 	var e = customer.instantiate()
 	e.position = Vector2(431,290)
 	e.player = thing
-	get_tree().get_root().add_child(e)
+	
+	get_parent().add_child(e)
 	
 	thing = e
 	
@@ -16,7 +17,7 @@ func _on_timeout():
 	e = customer.instantiate()
 	e.position = Vector2(431,290)
 	e.player = thing
-	get_tree().get_root().add_child(e)
+	get_parent().add_child(e)
 	
 	thing = e
 	

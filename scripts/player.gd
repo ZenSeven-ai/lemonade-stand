@@ -14,6 +14,7 @@ class_name Player
 
 		
 func _physics_process(_delta):
+
 	velocity = Vector2.ZERO
 	#Get input direction 
 	if Input.is_action_pressed("right"):

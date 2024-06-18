@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://doyc1bot0vht7"]
+[gd_scene load_steps=60 format=3 uid="uid://doyc1bot0vht7"]
 
 [ext_resource type="Texture2D" uid="uid://b6mwsyii0f1sv" path="res://art/ground.png" id="1_7l315"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_3roeu"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://6xf8yyto6wk5" path="res://art/stand.png" id="10_ryej1"]
 [ext_resource type="Script" path="res://scripts/cups.gd" id="11_imwvv"]
 [ext_resource type="Texture2D" uid="uid://fn5320065vfk" path="res://art/cups.png" id="12_ijrd2"]
-[ext_resource type="PackedScene" uid="uid://0ji0db0yfsc1" path="res://scenes/customer.tscn" id="13_3rsud"]
 [ext_resource type="Script" path="res://scenes/enemy_timer.gd" id="14_37fo1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_lipjw"]
@@ -664,12 +663,7 @@ shape = SubResource("CircleShape2D_ksi5g")
 position = Vector2(0.333328, 3.33333)
 shape = SubResource("RectangleShape2D_umu20")
 
-[node name="customer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("13_3rsud")]
-position = Vector2(431, 261)
-player = NodePath("../player/Sprite2D")
-
 [node name="spawn_timer" type="Timer" parent="."]
-wait_time = 10.236
 one_shot = true
 autostart = true
 script = ExtResource("14_37fo1")
