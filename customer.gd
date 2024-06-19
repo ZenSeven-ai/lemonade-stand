@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Customer
 
 const speed = 60
 
@@ -28,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		if nav_agent.is_target_reached():
 			velocity = Vector2.ZERO
 			## if you arent angry and you havent started the timer yet and the player is at the stand start the timer
-			if is_angry == false and start_angry == false and player ==  get_parent().get_node("stand/Sprite2D"):
+			if is_angry == false and start_angry == false and player == get_parent().get_node("stand/Sprite2D"):
 					start_angry = true
 					$angry.start()
 			if !target_reached:
@@ -49,9 +50,12 @@ func make_path() -> void:
 	
 # every time the timer times out make a new path to the player
 func _on_timer_timeout():
-
-
-		if target_reached == true and is_angry == false and nav_agent.distance_to_target() >70: 
+		## if who the enemey is following gets angry or gets their lemonade make their player the stand
+		var anger = false
+		if(player is Customer):
+			anger = player.is_customer_angry()
+		if target_reached == true and is_angry == false and (anger or player == null): 
+			
 			$".".player = get_parent().get_node("stand/Sprite2D")
 			player =  get_parent().get_node("stand/Sprite2D")
 		make_path()
@@ -74,3 +78,10 @@ func _on_angry_timeout():
 	player = get_parent().get_node("player/Sprite2D")
 	$".".player = get_parent().get_node("player/Sprite2D")
 
+
+
+func customer():
+	pass
+	
+func is_customer_angry():
+	return is_angry

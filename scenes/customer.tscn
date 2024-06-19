@@ -10,8 +10,6 @@ radius = 24.0208
 size = Vector2(65, 56)
 
 [node name="customer" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 3
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_kok7l")
@@ -39,7 +37,7 @@ position = Vector2(-1.5, 1)
 shape = SubResource("RectangleShape2D_8xdsv")
 
 [node name="angry" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 20.0
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
